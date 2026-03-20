@@ -1,14 +1,34 @@
-function sendToWhatsapp() {
-    let number = "+34649362370";
-    
-    let name = document.getElementById('form_name').value;
-    let phone = document.getElementById('form_phone').value;
-    let message = document.getElementById('form_message').value;
+function sendToWhatsapp(token) {
+    if (!token) {
+        return;
+    }
 
-    var url = "https://wa.me/" + number + "?text="
-        + "Nombre : " + name  + "%0a"
-        + "Teléfono : " + phone  + "%0a"
-        + "Mensaje : " + message + "%0a";
+    const form = document.getElementById('whatsapp-form');
+    if (!form || !form.checkValidity()) {
+        if (form) {
+            form.reportValidity();
+        }
+        if (window.grecaptcha) {
+            window.grecaptcha.reset();
+        }
+        return;
+    }
 
-    window.open(url, '_blank').focus();
+    const number = "34649362370";
+    const name = document.getElementById('form_name').value.trim();
+    const phone = document.getElementById('form_phone').value.trim();
+    const message = document.getElementById('form_message').value.trim();
+
+    const text = [
+        "Nombre: " + name,
+        "Teléfono: " + phone,
+        "Mensaje: " + message
+    ].join("\n");
+
+    const url = "https://wa.me/" + number + "?text=" + encodeURIComponent(text);
+    window.open(url, '_blank', 'noopener');
+
+    if (window.grecaptcha) {
+        window.grecaptcha.reset();
+    }
 }
