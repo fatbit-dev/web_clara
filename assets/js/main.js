@@ -119,16 +119,7 @@
    */
   document.querySelectorAll('.faq-item h3, .faq-item .faq-toggle').forEach((faqItem) => {
     faqItem.addEventListener('click', () => {
-      const currentItem = faqItem.parentNode;
-      const wasActive = currentItem.classList.contains('faq-active');
-
-      document.querySelectorAll('.faq-item.faq-active').forEach((item) => {
-        item.classList.remove('faq-active');
-      });
-
-      if (!wasActive) {
-        currentItem.classList.add('faq-active');
-      }
+      faqItem.parentNode.classList.toggle('faq-active');
     });
   });
 
